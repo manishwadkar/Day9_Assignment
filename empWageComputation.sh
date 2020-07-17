@@ -1,4 +1,4 @@
-#!/bin/bash -x
+#!/bin/bash 
 
 function getWorkHours() {
 
@@ -29,29 +29,32 @@ ParttimeHour=4
 WorkingDaysPerMonth=20
 TotalHour=0
 TotalDays=0
-i=0
+i=1
 
-while [ $TotalHour -le 100 ] && [ $TotalDays -le 20 ]
+declare -A daily_day_wage
+
+while [ $TotalHour -ne 100 ] && [ $TotalDays -ne 20 ]
 
 do
+	attendance=$((RANDOM%3))
 	case "$attendance" in
 	1)
 		TotalDays=$(($TotalDays+1))
 		getWorkHour=$( getWorkHours 1)
-		dailywage[$i]=$(($getWorkHour*$WagePerHour))
+		daily_day_wage[Day$i]=$(($getWorkHour*$WagePerHour))
 		i=$(($i+1))
 		TotalHour=$(($TotalHour+$getWorkHour))
 	;;
 	2)
 		TotalDays=$(($TotalDays+1))
         	getWorkHour=$( getWorkHours 2)
-		dailywage[$i]=$(($getWorkHour*$WagePerHour))
+		daily_day_wage[Day$i]=$(($getWorkHour*$WagePerHour))
         	i=$(($i+1))
                 TotalHour=$(($TotalHour+$getWorkHour))
 	;;
 	0)
 		getWorkHour=$( getWorkHours 0)
-		dailywage[$i]=$(($getWorkHour*$WagePerHour))
+		daily_day_wage[Day$i]=$(($getWorkHour*$WagePerHour))
         	i=$(($i+1))
 		TotalDays=$(($TotalDays+1))
 	;;
@@ -61,7 +64,12 @@ do
 	esac
 done
 
-echo "Daily wage: " ${dailywage[@]}
+echo "Daily wage: " ${daily_day_wage[@]}
+
+for key in ${!daily_day_wage[@]}
+do
+	echo $key: ${daily_day_wage[$key]}
+done
 
 if [ $TotalHour -ge 100 ]
 then
