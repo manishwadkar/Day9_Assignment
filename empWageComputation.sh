@@ -1,5 +1,21 @@
 #!/bin/bash -x
 
+function getWorkHours() {
+
+	case $1 in
+	1)
+		echo 8
+		;;
+	2)
+		echo 4
+		;;
+	0)
+		echo 0
+		;;
+	esac
+
+}
+
 echo "Welcome to employee wage computation program"
 
 isPresent=1
@@ -19,11 +35,13 @@ do
 	case "$attendance" in
 	1)
 		TotalDays=$(($TotalDays+1))
-		TotalHour=$(($TotalHour+8))
+		getWorkHours=$( getWorkHours 1)
+		TotalHour=$(($TotalHour+$getWorkHours))
 	;;
 	2)
 		TotalDays=$(($TotalDays+1))
-        	TotalHour=$(($TotalHour+4))
+        	getWorkHours=$( getWorkHours 2)
+                TotalHour=$(($TotalHour+$getWorkHours))
 	;;
 	0)
 		TotalDays=$(($TotalDays+1))
