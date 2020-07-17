@@ -14,7 +14,7 @@ if [ $attendance -eq $isPresent ]
 then
 	wage=$(($WagePerHour*$FullDayHour))
 	echo "Employee is present"
-	wage=$(($WagePerHour*$FullDayHour))
+	echo "Daily wage is " $wage
 else
 	echo "Employee is absent"
 	echo "Daily wage is " $wage
