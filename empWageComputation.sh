@@ -11,17 +11,22 @@ FullDayHour=8
 wage=0
 ParttimeHour=4
 
-if [ $attendance -eq $isPresent ]
-then
+case "$attendance" in
+1)
 	wage=$(($WagePerHour*$FullDayHour))
 	echo "Employee is present"
 	echo "Daily wage is " $wage
-elif [ $attendance -eq 2 ]
-then
+;;
+2)
 	wage=$(($WagePerHour*$ParttimeHour))
         echo "Employee is present (PART TIME)"
         echo "Daily wage is " $wage
-else
+;;
+0)
 	echo "Employee is absent"
 	echo "Daily wage is " $wage
-fi
+;;
+*)
+	echo "Invalid option"
+;;
+esac
