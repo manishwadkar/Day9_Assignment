@@ -20,8 +20,6 @@ echo "Welcome to employee wage computation program"
 
 isPresent=1
 
-attendance=$((RANDOM%3))
-
 WagePerHour=20
 FullDayHour=8
 wage=0
