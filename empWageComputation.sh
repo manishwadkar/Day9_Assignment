@@ -29,21 +29,30 @@ ParttimeHour=4
 WorkingDaysPerMonth=20
 TotalHour=0
 TotalDays=0
+i=0
 
 while [ $TotalHour -le 100 ] && [ $TotalDays -le 20 ]
+
 do
 	case "$attendance" in
 	1)
 		TotalDays=$(($TotalDays+1))
-		getWorkHours=$( getWorkHours 1)
-		TotalHour=$(($TotalHour+$getWorkHours))
+		getWorkHour=$( getWorkHours 1)
+		dailywage[$i]=$(($getWorkHour*$WagePerHour))
+		i=$(($i+1))
+		TotalHour=$(($TotalHour+$getWorkHour))
 	;;
 	2)
 		TotalDays=$(($TotalDays+1))
-        	getWorkHours=$( getWorkHours 2)
-                TotalHour=$(($TotalHour+$getWorkHours))
+        	getWorkHour=$( getWorkHours 2)
+		dailywage[$i]=$(($getWorkHour*$WagePerHour))
+        	i=$(($i+1))
+                TotalHour=$(($TotalHour+$getWorkHour))
 	;;
 	0)
+		getWorkHour=$( getWorkHours 0)
+		dailywage[$i]=$(($getWorkHour*$WagePerHour))
+        	i=$(($i+1))
 		TotalDays=$(($TotalDays+1))
 	;;
 	*)
@@ -51,6 +60,8 @@ do
 	;;
 	esac
 done
+
+echo "Daily wage: " ${dailywage[@]}
 
 if [ $TotalHour -ge 100 ]
 then
