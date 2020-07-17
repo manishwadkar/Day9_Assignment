@@ -11,23 +11,34 @@ FullDayHour=8
 wage=0
 ParttimeHour=4
 WorkingDaysPerMonth=20
+TotalHour=0
+TotalDays=0
 
-case "$attendance" in
-1)
-	wage=$(($WagePerHour*$FullDayHour*$WorkingDaysPerMonth))
-	echo "Employee is present"
+while [ $TotalHour -le 100 ] && [ $TotalDays -le 20 ]
+do
+	case "$attendance" in
+	1)
+		TotalDays=$(($TotalDays+1))
+		TotalHour=$(($TotalHour+8))
+	;;
+	2)
+		TotalDays=$(($TotalDays+1))
+        	TotalHour=$(($TotalHour+4))
+	;;
+	0)
+		TotalDays=$(($TotalDays+1))
+	;;
+	*)
+		echo "Invalid option"
+	;;
+	esac
+done
+
+if [ $TotalHour -ge 100 ]
+then
+	wage=$(($WagePerHour*$TotalHour))
 	echo "Monthly wage is " $wage
-;;
-2)
-	wage=$(($WagePerHour*$ParttimeHour*$WorkingDaysPerMonth))
-        echo "Employee is present (PART TIME)"
+else
+	wage=$(($WagePerHour*$TotalHour))
         echo "Monthly wage is " $wage
-;;
-0)
-	echo "Employee is absent"
-	echo "Monthly wage is " $wage
-;;
-*)
-	echo "Invalid option"
-;;
-esac
+fi
